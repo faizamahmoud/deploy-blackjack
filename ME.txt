@@ -1,0 +1,70 @@
+GOAL/OBJECTIVE: BEAT THE DEALER 
+HOW TO WIN: GET CLOSER TO 21 THAN THE DEALER, WITHOUT GOING OVER 21
+LOSE: 1. DEALER GETS CLOSER TO 21 THAN YOU OR 2. YOU GO OVER 21, YOU LOSE RIGHT AWAY
+
+<!-- STATE - KEEP TRACK OF MOVES -->
+- Who's turn it is
+- Whether player wins the game or loses
+<!-- - money remaining/money bet  -->
+
+<!-- SET UP GLOBAL VARIABLES -->
+- AI 
+- Player
+- DOM events
+    - for player hitting yes(hit) or no(stand) on bet
+
+<!-- Classes/Objects -->
+- card object
+How Do You Find a Hand’s Total Value?
+Blackjack is played with a conventional deck of 52 playing cards and suits don’t matter.
+
+2 through 10 count at face value, i.e. a 2 counts as two, a 9 counts as nine.
+Face cards (J,Q,K) count as 10.
+Ace can count as a 1 or an 11 depending on which value helps the hand the most.
+
+TEST
+
+GAME PLAY
+<!-- AI -->
+- deal 2 cards for theirselves and two for the player
+    - back & forth, AI has one card hidden
+- AI asks player if they want to hit or stand
+    - Hit: AI deals player 1 more card
+        - AI turns over second card
+            - game analyzed on who wins or loses
+                - if player wins, player collects pot and then decides if they want to play another round 
+                
+    - stand: AI turns over second card 
+- After round is over, AI asks if you want to play another round
+
+<!-- player moves -->
+- hit - until player is satisfied or max is reached 
+- stand
+
+<!-- Outcomes of game -->
+
+ - whoever has the highest card count - wins
+ - blackjack on first draw- automatic wins
+ - blackjack - wins
+ - push (no one wins), e.g. dealer = player = 20 points
+ - bust - player goes over 21
+ - bust - AI goes over 21 - no one wins
+
+
+ 
+ - AI wins because cards are 21 points - 
+- ****AI needs to hit until they have over 17 points: If AI has <=16 points, they hit until they bust, blackjack, 
+    - if bust, AI loses
+
+<!-- How do you beat the dealer? -->
+
+By drawing a hand value that is higher than the dealer’s hand value
+By the dealer drawing a hand value that goes over 21.
+By drawing a hand value of 21 on your first two cards, when the dealer does not.
+
+How do you lose to the dealer? 
+
+Your hand value exceeds 21.
+The dealers hand has a greater value than yours at the end of the round
+
+
