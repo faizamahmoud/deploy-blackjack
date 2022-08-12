@@ -76,6 +76,7 @@ play.addEventListener('click', playGame)
 
 function playGame() {
 
+
     let dealer = new Player('Dealer');
     let playerBob = new Player('Bob');
 
@@ -120,31 +121,6 @@ function clickedHit() {
 
 
 /////////////////////////////////////////////////////// OUTCOME LOGIC //////////////////////////////////////////////////////////////////////////////////////////////////////////
-function dealerOutcomes() {
-    
-    //messages for win or lose 
-    if (dealerScore < 17) { 
-        clickedHit(); //click hit for dealer?
-    } else if (dealerScore === 21) {
-        console.log('BLACKJACK')
-    } else if (dealerScore > 21) {
-        console.log('BUST')
-    }
-}
-
-function playerOutcomes(){
-    //messages for win or lose
-    if (playerScore < 20) {
-        // player can hit or stay 
-    } else if (playerScore === 21) {
-        console.log('BLACKJACK')
-    } else if (playerScore() > 21) {
-        console.log('BUST')
-    }
-
-}
-
-
 
 
 
@@ -166,12 +142,7 @@ class Player {
         this.handArray = handArray;
         this.score = 0;
     }
-    recieveCard(newCard) { //currently giving player cards only 
-        
-        // if(this.dealer = 'dealer'){
-
-        // }
-        
+    recieveCard(newCard) {
         let newCardImg = document.createElement("img");
 
         newCardImg.src = "./cards/" + newCard.stringifyCard() + ".png"
@@ -179,8 +150,6 @@ class Player {
 
         document.getElementsByClassName("player-container")[0].appendChild(newCardImg);
 
-        //check point conditions and if we're within 
-        //
         this.handArray.push(newCard);
 
     }
@@ -217,5 +186,38 @@ class Player {
 
 }
 
+function playerOutcomes() {
+    //messages for win or lose
+    if (playerScore < 20) {
+        // player can hit or stay 
+    } else if (playerScore === 21) {
+        console.log('BLACKJACK')
+    } else if (playerScore() > 21) {
+        console.log('BUST')
+    }
 
-//extend dealer - receiveCard()
+}
+
+class Dealer extends Player() {
+    constructor(player, handArray = []) {
+        super(player, handArray = [])
+    }
+    receiveCard() {
+        let newCardImg = document.createElement("img");
+        newCardImg.src = "./cards/" + newCard.stringifyCard() + ".png";
+        newCardImg.className = 'cards';
+        document.getElementsByClassName("dealer-container")[0].appendChild(newCardImg);
+        this.handArray.push(newCard);
+    }
+
+    dealerOutcomes() {
+        if (dealerScore < 17) {
+            clickedHit(); //click hit for dealer?
+        } else if (dealerScore === 21) {
+            console.log('BLACKJACK');
+        } else if (dealerScore > 21) {
+            console.log('BUST');
+        }
+    }
+}
+
