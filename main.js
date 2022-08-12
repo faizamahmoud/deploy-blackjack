@@ -1,27 +1,28 @@
-
+// RESET GAME - WHEN DOES GAME STOP AND RESET, BUTTONS FOR DO YOU WANT TO PLAY AGAIN
+// UPDATE PLAYER/DEALER SCORE 
+// more than one ace in hand
+// stay button
+// hidden card
 
 
 class Card {
-
     constructor(suit, value) {
         this.suit = suit;
         this.value = value;
     }
-
     getSuit() {
         return console.log(this.suit);
     }
-
     getCardValue() {
         return this.value;
     }
-
+    stringifyCard() {
+        return this.value + "-" + this.suit[0]; //8-C
+    }
 }
-// console.log(newCard.getSuit()) //clubs
-// console.log(newCard.suit) //undefined, protected
 
 
-
+/////////////////////////////////////////////////////// DECK CLASS //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // FULL DECK
 class Deck {
@@ -29,148 +30,192 @@ class Deck {
         this.cardArray = [];
     }
 
-    assembleDeck() { //array of Card objects 
-
+    assembleDeck() {
         const suits = ['CLUBS', 'HEARTS', 'DIAMONDS', 'SPADES'];
-        const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-
-
+        const values = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
         for (let i = 0; i < values.length; i++) {
             for (let j = 0; j < suits.length; j++) {
-                //this.cardArray.push({value:values[i], suit:suits[j]})
-
-                this.cardArray.push(new Card(suits[j], values[i])) //creating objects for 52 cards in a deck
+                this.cardArray.push(new Card(suits[j], values[i]))
             }
         }
-
     }
 
     shuffleDeck() {
-
         let deckArray = this.cardArray;
-
         for (var i = deckArray.length - 1; i > 0; i--) {
-            // console.log('index:', i)
-
-            let randIdx = Math.floor(Math.random() * (i + 1)); //or .length
-
-            let temp = deckArray[i]; //assign temp to be the last element in the array
-            // console.log('let temp = deckArray[i] =  ' + deckArray[i])
-
-            deckArray[i] = deckArray[randIdx]; //then assign  
-            // console.log('let deckArray[i] = deckArray[randIdx] = ', deckArray[randIdx])
-
+            let randIdx = Math.floor(Math.random() * (i + 1));
+            let temp = deckArray[i];
+            deckArray[i] = deckArray[randIdx];
             deckArray[randIdx] = temp;
-            // console.log('let deckArray[randIdx] = temp = ', deckArray[randIdx])
         }
-        //pushs 52 cards onto an array and returns shuffled cards array       
         this.cardArray = deckArray;
-
     }
-
+    drawCard() {
+        return this.cardArray.pop();
+    }
 }
 
 //VARIABLES
-let player;
-let dealer;
-let playerHand = [];
-let dealerHand = [];
-let remainingCards = 0; //oneDeck
+
+
 let hiddenCard;
 
 
 
 
-// PLAY GAME
 
-//Press play button
+
+/////////////////////////////////////////////////////// PLAY GAME //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+let oneDeck = new Deck();
+
+
 let play = document.getElementById('press-play')
 play.addEventListener('click', playGame)
 
 
 function playGame() {
-    let play = document.getElementById('press-play');
-    play.style.display = "none"; // check
 
-    //create a deck
-    const oneDeck = new Deck();
+    let dealer = new Player('Dealer');
+    let playerBob = new Player('Bob');
+
+    let play = document.getElementById('press-play')
+    play.style.display = "none"; // works
     oneDeck.assembleDeck();
     oneDeck.shuffleDeck();
-    //console.log(oneDeck)
 
+    let hit = document.getElementById('hit-btn');
+    hit.addEventListener('click', clickedHit.bind(playerBob)) // access player bob from clickHit()
 
-    let card = oneDeck.cardArray.pop()
-    // playerHand.push(oneDeck.cardArray.pop(), oneDeck.cardArray.pop())
-    // dealerHand.push(oneDeck.cardArray.pop(), oneDeck.cardArray.pop())
-
-
-
-
-
-
-
-
+    playerBob.recieveCard(oneDeck.drawCard());
+    //hidden dealer - hidden needs to replace with the third hit
+    playerBob.recieveCard(oneDeck.drawCard());
+    //dealerJim
 
 };
+
+/////////////////////////////////////////////////////// STAND //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 let stay = document.getElementById('stay-btn');
 stay.addEventListener('click', clickedStay)
+
 function clickedStay() {
-    dealerHand.push(oneDeck.cardArray.pop())
+    //dealer clickedHit dealerJim 
+    //route to checks 
+    //dealer clickedHit
+    //route to checks 
 }
 
-// let hit = document.getElementById('hit-btn');
-// hit.addEventListener('click', clickedHit)
+/////////////////////////////////////////////////////// HIT //////////////////////////////////////////////////////////////////////////////////////////////////////////
+//recieve card
 function clickedHit() {
-    //if score < 21 
-    //create an element
-    let newCardImg = document.createElement("img");
-    console.log(newCardImg)
+    // draws a card
+    let newCard = oneDeck.drawCard();
 
-    newCardImg.src = "./cards/" + card + ".png";
-    document.getElementById("player-cards").append(newCardImg);
-    playerHand.push(card);
+    //assigns it to this player
+    this.recieveCard(newCard);
 
 }
-// RESET GAME - 
 
 
+/////////////////////////////////////////////////////// OUTCOME LOGIC //////////////////////////////////////////////////////////////////////////////////////////////////////////
+function dealerOutcomes() {
+    
+    //messages for win or lose 
+    if (dealerScore < 17) { 
+        clickedHit(); //click hit for dealer?
+    } else if (dealerScore === 21) {
+        console.log('BLACKJACK')
+    } else if (dealerScore > 21) {
+        console.log('BUST')
+    }
+}
 
-function gameOutcomes() {
-    // 'A':[1,11] if A=1 causes bust then A=1 then subtract 10
+function playerOutcomes(){
+    //messages for win or lose
+    if (playerScore < 20) {
+        // player can hit or stay 
+    } else if (playerScore === 21) {
+        console.log('BLACKJACK')
+    } else if (playerScore() > 21) {
+        console.log('BUST')
+    }
 
-    // DEALER SHOWS CARD AND NEEDS TO HIT UNTIL THEY HAVE ATLEAST 17, IF DEALER 17 WITH 3 CARDS AND PLAYER 18, PLAYER WINS
-    // 3 OUTCOMES FOR PAYOUTS : 1. PLAYER WINS, THEY WIN THEYRE BET*2  2. LOSE ENTIIRE BET  3.PUSH - PLAYER HAS SAME BET VALUE AS 
-    //DEALER - TIE 4. DEALT BLACKJACK (IF DEALER GETS BLACKJACK THEN PUSH)
 }
 
 
 
 
 
+
+
+
+
+/////////////////////////////////////////////////////// PLAYER CLASS //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// player name, and cards  player1.receievCard = [{card obj}] 
+//dealer card, 
+// score - displayed
+// 
 
 
 class Player {
-    constructor(dealer, player, array) {
-        this.dealer = dealer;
+    constructor(player, handArray = []) {
         this.player = player;
-        this.array = [];
+        this.handArray = handArray;
+        this.score = 0;
+    }
+    recieveCard(newCard) { //currently giving player cards only 
+        
+        // if(this.dealer = 'dealer'){
+
+        // }
+        
+        let newCardImg = document.createElement("img");
+
+        newCardImg.src = "./cards/" + newCard.stringifyCard() + ".png"
+        newCardImg.className = 'cards';
+
+        document.getElementsByClassName("player-container")[0].appendChild(newCardImg);
+
+        //check point conditions and if we're within 
+        //
+        this.handArray.push(newCard);
 
     }
-    //keeps track of score, A = 10points, need to figure out A = 1
-    //input card
-    score() {
-
+    calculateScore() {
         let sum = 0;
+
         for (let i = 0; i < this.array.length; i++) {
-            if (typeof this.array[i].value === 'string') {
-                this.array[i].value = 10;
-                sum += this.array[i].value;
-            } else {
-                sum += this.array[i].value;
+            let value = this.array[i].value;
+            if (value === 'A' || typeof value === 'string') {
+                sum += 10;
+            } else if (typeof value === 'number') {
+                sum += value;
             }
         }
-        return sum;
+        this.score = sum;
+    }
+    // getScore() { update score
+    //   this.calculateScore += class="player-score">PLAYER SCORE</div>
+    //   <div class="dealer-score"
+    // // }
+    checkAce() {
+        if (this.array[i].value === "A") {
+            return true;
+        }
+        return false;
+    }
+    aceTotal() {
+        let aceIsOne = 10;
+        if (dealerScore > 21 && checkAce() === true) {
+            //subtract score by 10 points 
 
+        }
     }
 
 }
+
+
+//extend dealer - receiveCard()
