@@ -1,9 +1,3 @@
-// RESET GAME - WHEN DOES GAME STOP AND RESET, BUTTONS FOR DO YOU WANT TO PLAY AGAIN
-// UPDATE PLAYER/DEALER SCORE 
-
-
-
-
 
 class Card {
     constructor(suit, value) {
@@ -11,20 +5,15 @@ class Card {
         this.value = value;
     }
     getSuit() {
-        return console.log(this.suit);
+        return this.suit;
     }
     getCardValue() {
         return this.value;
     }
     stringifyCard() {
-        return this.value + "-" + this.suit[0]; //8-C
+        return this.value + "-" + this.suit[0]; 
     }
 }
-
-
-
-
-// FULL DECK
 class Deck {
     constructor() {
         this.cardArray = [];
@@ -54,8 +43,6 @@ class Deck {
         return this.cardArray.pop();
     }
 }
-
-
 class Player {
     constructor(player, handArray = []) {
         this.player = player;
@@ -63,6 +50,7 @@ class Player {
         this.score = 0;
     }
     recieveCard(newCard) {
+        // create a new element and set the source to a card
         let newCardImg = document.createElement("img");
         newCardImg.src = "./cards/" + newCard.stringifyCard() + ".png"
         newCardImg.className = 'cards';
@@ -74,7 +62,7 @@ class Player {
         if (card.value === 'A') {
             this.score += 11;
             if (this.score > 21) {
-                this.score -= 10;
+                this.score -= 10;    // NOT WORKING
             }
         } else if (typeof card.value === 'string') {
             this.score += 10;
@@ -83,33 +71,34 @@ class Player {
         }
 
     }
+    tallyPoints(card) {
+       let scoreboard =  document.getElementsByClassName('player-score').innerHTHML;
+       scoreboard = this.score;
+        
+    }
+
     getScore() {
         return this.score;
     }
 
-    // split up, extra methods, blackjack
+    // split up win/lose by outcome, extra methods, blackjack - game over
     winOrLose() {
-        console.log('testing')
+        
         if (this.getScore() <= 20) {
             console.log('you can hit or stay, no popup')
         } else if (this.getScore() === 21) {
             console.log('BLACKJACK pop up, reset game')
         } else if (this.getScore() > 21) {
-            console.log('bust muthafucka - reset game')
+            console.log('bust pop up - reset game')
         }
     }
+
     gameOver() {
         let gameOver = document.getElementsByClassName('game-over')
         gameOver.style.display = "block";
         reload();
     }
-
-
 }
-
-
-
-
 class Dealer extends Player {
     constructor(player, handArray = []) {
         super(player, handArray = []);
@@ -126,20 +115,35 @@ class Dealer extends Player {
 
     }
 
-    dealerTurn() {
-        console.log('dealer taking turn')
-        while (this.getScore() <= 17) {
-            this.recieveCard(oneDeck.drawCard());
-        }
-        this.winOrLose();
+    dealerTurn() { // need delay timer 
+        console.log('dealer turn method')
+        // setTimeout( () => {
+        //     this.revealHiddenCard();
+        // }, 1000 );
         this.revealHiddenCard();
+        this.recieveCard( oneDeck.drawCard() )
+        this.winOrLose();
+        // while ( this.getScore() <= 17 ) {
+        //     setTimeout(() => {
+        //         this.recieveCard( oneDeck.drawCard() );
+        //         this.winOrLose();
+        //     }, 1000)
+        // }
     }
+    //   setTimeout(() => {
+    //     while (this.getScore() <= 17) {
+    //         this.recieveCard(oneDeck.drawCard());
+    //     }
+    //     this.winOrLose();
+    // }, 1000)
+    
+    
     
     //revealing multiple same cards for dealer - calling of cards the same class, reveal card class=hidden-card
     revealHiddenCard() {
-        console.log(this.handArray)
+        // console.log(this.handArray)
         let hiddenCardImg = document.getElementsByClassName('hidden-card')[0]
-        console.log(hiddenCardImg)
+        // console.log(hiddenCardImg)
         hiddenCardImg.src = "./cards/" + this.handArray[0].stringifyCard() + ".png"
         
         hiddenCardImg.className = 'cards';
@@ -157,80 +161,47 @@ class Dealer extends Player {
         document.getElementsByClassName("dealer-container")[0].appendChild(newCardImg);
         this.handArray.push(newCard);
     }
-    }
 
-//create deck
+}  
+
+
 let oneDeck = new Deck();
+let dealer = new Dealer('Dealer');
+let playerBob = new Player('Bob');
 
-//storing the play button and assigning an event listener
-let play = document.getElementById('press-play')
-play.addEventListener('click', playGame)
-
-
-// DISABLE MESSAGE POP UPS 
-// let gameOver = document.getElementsByClassName('game-over')
-// gameOver.style.display = "none"; 
-
-// let dealerWins = document.getElementsByClassName('dealer-wins')
-// gameOver.style.display = "none"; 
-
-// let youWin = document.getElementsByClassName('You Win!')
-// gameOver.style.display = "none"; 
-
-// let youLose = document.getElementsByClassName('You Lose!')
-// gameOver.style.display = "none"; 
+// EVENTS
+document.getElementById('press-play').addEventListener('click', startGame); // PRESS PLAY BUTTON
 
 
-function playGame() {
-    // let dealer = new Player('Dealer');
-    let dealer = new Dealer('Dealer');
-
-    let playerBob = new Player('Bob');
-
-
-    let play = document.getElementById('press-play')
-    play.style.display = "none"; // works
+function startGame() {
+    document.getElementById('press-play').style.display = "none"; // HIDE PLAY BUTTON
     oneDeck.assembleDeck();
     oneDeck.shuffleDeck();
-
+}
+function nextRound(){
+    // PUT CARDS DOWN ON TABLE *
     playerBob.recieveCard(oneDeck.drawCard());
     playerBob.recieveCard(oneDeck.drawCard());
-
     dealer.recieveHiddenCard(oneDeck.drawCard());
     dealer.recieveCard(oneDeck.drawCard());
 
+    // CHECK CONDITIONS
     playerBob.winOrLose();
-    dealer.winOrLose();
-    
 
-    let hit = document.getElementById('hit-btn');
-    hit.addEventListener('click', clickedHit.bind(playerBob))
-
-
-    let stay = document.getElementById('stay-btn');
-    stay.addEventListener('click', clickedStay.bind(dealer))
-
-};
-
-
-
-
-function clickedStay() {
-
-    this.dealerTurn(); //checks dealer points
-    
+    document.getElementById('hit-btn').addEventListener('click', clickedHit.bind(playerBob));
+    document.getElementById('stay-btn').addEventListener('click', clickedStay.bind(dealer));
 }
-
-
+function clickedStay() {
+    document.getElementById("hit-btn").disabled = true;  // DISABLE PLAY BUTTON
+    this.winOrLose(); // CHECK DEALAER CONDITIONS
+    this.dealerTurn(); // 
+}
 function clickedHit() {
-
     let newCard = oneDeck.drawCard();
     //assigns it to this player
     this.recieveCard(newCard);
-
     this.winOrLose();
 }
-
 
 
 
@@ -250,3 +221,25 @@ function clickedHit() {
 
 // let youLose = document.getElementsByClassName('You Lose!')
 // gameOver.style.display = "block"; 
+
+
+// DISABLE MESSAGE POP UPS - first make divs
+// let gameOver = document.getElementsByClassName('game-over')
+// gameOver.style.display = "none"; 
+
+// let dealerWins = document.getElementsByClassName('dealer-wins')
+// gameOver.style.display = "none"; 
+
+// let youWin = document.getElementsByClassName('You Win!')
+// gameOver.style.display = "none"; 
+
+// let youLose = document.getElementsByClassName('You Lose!')
+// gameOver.style.display = "none"; 
+
+
+// reset () {
+//     reset scoreboard
+//hit and stay button
+// } 
+// AFTER RESET, GO TO NEXT ROUND
+// WHEN X AMOUNT OF CARDS REMAIN, ASK PLAYER IF THEY WANT TO DO ANOTHER GAME - DISPLAY
