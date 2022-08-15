@@ -1,67 +1,71 @@
-
-.game-container {
-    display:grid;
-    grid-template-columns:repeat(5, 20%);
-    grid-template-rows:repeat(5, 20%);
-    width: 100%;
-    height:100%;
-}
-
 body {
     background-color: rgb(12, 85, 12);
     font-family: 'Aboreto', cursive;
-    color:black;
-    height:700px;
+    color: black;
+    height: 700px;
     background-image: url('https://images.unsplash.com/photo-1552749412-02bd58bcff5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
     background-repeat: no-repeat;
     background-size: cover;
 
 }
+
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(5, 20%);
+    width: 100%;
+    height: 100%;
+}
+
 .game-title {
-    display:grid;
-    grid-column:3;
+    display: grid;
+    grid-column: 3;
     color: gold;
-    text-shadow:1px 1px 10px #fff, 1px 1px 10px #ccc;
+    text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
     font-size: 60px;
     animation: glow 1s ease-in-out infinite alternate;
-    
+
 }
-.cards, .d-cards, .hidden-card{
-    width:150px;
-    height:150px;
+
+.cards,
+.d-cards,
+.hidden-card {
+    width: 150px;
+    height: 150px;
     margin-left: 10px;
     margin-right: 10px;
 }
 
 .player-container {
-    width:100%;
-    height:100px;
+    width: 100%;
+    height: 100px;
     /* background-color: red; */
-    display:flex;
+    display: flex;
     grid-area: 5 / 1 / 5 / 6;
     justify-content: center;
-    
+
 }
 
 .dealer-container {
-    width:100%;
-    height:100px;
+    width: 100%;
+    height: 100px;
     /* background-color: rgb(45, 9, 72); */
-    display:flex;
+    display: flex;
     grid-area: 1 / 1 / 5 / 6;
     justify-content: center;
 }
 
 .game-btns {
-    display:flex;
+    display: flex;
     justify-content: center;
-    grid-area:3/3;
+    grid-area: 3/3;
     cursor: pointer;
-    
+
 }
+
 #press-play {
-    display:grid;
-    grid-area: 2 / 3 ;
+    display: grid;
+    grid-area: 2 / 3;
     background-color: red;
     width: 500px;
     height: 100px;
@@ -69,9 +73,10 @@ body {
     color: white;
     border-radius: 50px;
     display: inline-block;
-    
+
 
 }
+
 #hit-btn {
     cursor: pointer;
     margin-left: 10px;
@@ -94,44 +99,47 @@ body {
     border-radius: 50px;
     background-color: green;
     color: white;
-    
+
 }
+
 #reset-btn {
     cursor: pointer;
+    margin-top: 30px;
     margin-left: 10px;
     margin-right: 10px;
-    width: 100px;
+    width: 170px;
     height: 50px;
     font-size: 20px;
-    border-radius: 50px;
+    border-radius: 25px;
     background-color: green;
+    opacity: .7;
     color: white;
-    display:block;
+    display: block;
 }
 
 
 .player-score {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    display:grid;                              
-    grid-area:4/1 ;
-    font-size:50px;
-    color:gold;
+    display: grid;
+    grid-area: 4/1;
+    font-size: 50px;
+    color: gold;
     text-align: center;
     /* background-color: rgb(53, 70, 124); */
 }
 
 .dealer-score {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    display:grid;
+    display: grid;
     grid-area: 4 / 5;
-    font-size:50px;
-    color:gold;
+    font-size: 50px;
+    color: gold;
     text-align: center;
 }
 
 .pop-up-messages {
     font-family: 'Courier New', Courier, monospace;
-    width: 250px;
+    width: 450px;
     height: 150px;
     padding: 20px;
     border-radius: 60px;
@@ -140,8 +148,10 @@ body {
     font-size: 50px;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     grid-area: 2/3;
     cursor: pointer;
-    display: inline-block;
+
 
 }
