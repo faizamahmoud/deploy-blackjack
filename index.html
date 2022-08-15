@@ -6,34 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>BLACKJACK</title>
     <link rel="stylesheet" href="style.css">
-    
   </head>
   <body>
-    <h2 class="game-title">BLACKJACK</h2> 
+    <h2 class="game-title"><strong>BLACKJACKSTACKS</strong></h2>
     <div class="game-container">
       
-      <div class="dealer-container">
-        <img id="hidden-card" src="./cards/BACK.png">
-      </div>
-      <div class="player-container">
-        <div class="player-cards card1 cards">player 1 card</div>
-        <!-- <div class="player-cards card2 cards">player 2 card</div> -->
-      </div>
-      <button id="press-play">PLAY</button> 
+        <div class="dealer-container"></div>
+        <div class="player-container"></div>
+      
+      <button id="press-play">PLAY</button>
       <div class="game-btns">
-        <button id="hit-btn">HIT</button>
-        <button id="stay-btn">STAY</button>
+        <button type="submit" id="hit-btn">HIT</button>
+        <button type="submit" id="stay-btn">STAY</button>
         
       </div>
-      
-
-      <div class="player-score">PLAYER SCORE</div>
-      <div class="dealer-score">DEALER SCORE</div>
-    
-    
-      <div class='footer'>
-        <p>FAIZA MAHMOUD | PROJECT 1 | 2022 </p>
-      </div>
+      <div class="player-score"></div>
+      <div class="dealer-score"></div>
+  
+  
+      <div class="pop-up-messages">
+        <span class="messages"></span>
+        <button id="reset-btn">PLAY-AGAIN</button>
+      </div> 
+  
     </div>
     <script src="main.js" defer></script>
   </body>

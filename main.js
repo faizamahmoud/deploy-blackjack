@@ -10,6 +10,20 @@ class Card {
     getCardValue() {
         return this.value;
     }
+    cardDictionary() {
+        switch (this.value) {
+            case 'A':
+                return 11;
+            case 'K':
+                return 10;
+            case 'Q':
+                return 10;
+            case 'J':
+                return 10;
+            default:
+                return this.value;
+        }
+    }
     stringifyCard() {
         return this.value + "-" + this.suit[0]; 
     }
@@ -47,199 +61,203 @@ class Player {
     constructor(player, handArray = []) {
         this.player = player;
         this.handArray = handArray;
-        this.score = 0;
+        this.totalScore = 0;
+    }
+    getScore() {
+        return this.totalScore;
     }
     recieveCard(newCard) {
-        // create a new element and set the source to a card
         let newCardImg = document.createElement("img");
         newCardImg.src = "./cards/" + newCard.stringifyCard() + ".png"
         newCardImg.className = 'cards';
         document.getElementsByClassName("player-container")[0].appendChild(newCardImg);
         this.handArray.push(newCard);
-        this.updateScore(newCard);
+        this.tallyPoints(newCard);
     }
-    updateScore(card) {
-        if (card.value === 'A') {
-            this.score += 11;
-            if (this.score > 21) {
-                this.score -= 10;    // NOT WORKING
+    tallyPoints() {
+        let counter = 0;
+        this.totalScore = 0;
+        for (let i = 0; i < this.handArray.length; i++) {
+            let card = this.handArray[i];
+            if(card.value === 'A'){
+                counter++;
             }
-        } else if (typeof card.value === 'string') {
-            this.score += 10;
-        } else {
-            this.score += card.value;
+            if(this.bust()){
+                if(counter > 0){
+                    counter--;
+                    this.totalScore -= 10;
+                }
+            }
+            this.totalScore += card.cardDictionary();
         }
-
-    }
-    tallyPoints(card) {
-       let scoreboard =  document.getElementsByClassName('player-score').innerHTHML;
-       scoreboard = this.score;
-        
+    return this.totalScore;
     }
 
     getScore() {
         return this.score;
     }
-
-    // split up win/lose by outcome, extra methods, blackjack - game over
-    winOrLose() {
-        
-        if (this.getScore() <= 20) {
-            console.log('you can hit or stay, no popup')
-        } else if (this.getScore() === 21) {
-            console.log('BLACKJACK pop up, reset game')
-        } else if (this.getScore() > 21) {
-            console.log('bust pop up - reset game')
+    bust(){
+        if(this.totalScore > 21){
+            messageBox.style.display = 'block'
+            message.innerHTML = this.player + " BUSTS";
+            return true;
+        }
+    return false;
+    }
+    blackjack(){
+       if(this.totalScore === 21){
+        messageBox.style.display = 'block'
+        message.innerHTML = "BLACKJACK!! " + this.player + " WINS!!!";
+       }
+    }
+    
+    tie(player){
+        if(this.totalScore === player.totalScore){
+            messageBox.style.display = 'block'
+            message.innerHTML = "TIE";
+        }
+    }
+    compareScores(player){
+        if(this.totalScore > player.totalScore){
+            messageBox.style.display = 'block'
+            message.innerHTML = this.player + " WINS";
+        }else{
+            messageBox.style.display = 'block'
+            message.innerHTML = player + " WINS";
         }
     }
 
-    gameOver() {
-        let gameOver = document.getElementsByClassName('game-over')
-        gameOver.style.display = "block";
-        reload();
+    winOrLose () {
+        this.blackjack();
+        this.bust();
     }
+
 }
+
 class Dealer extends Player {
     constructor(player, handArray = []) {
         super(player, handArray = []);
     }
 
     recieveCard(newCard) {
-
         let newCardImg = document.createElement("img");
         newCardImg.src = "./cards/" + newCard.stringifyCard() + ".png";
         newCardImg.className = 'd-cards';
         document.getElementsByClassName("dealer-container")[0].appendChild(newCardImg);
         this.handArray.push(newCard);
-        this.updateScore(newCard);
-
+        this.tallyPoints(newCard);
     }
 
-    dealerTurn() { // need delay timer 
-        console.log('dealer turn method')
-        // setTimeout( () => {
-        //     this.revealHiddenCard();
-        // }, 1000 );
+    dealerTurn() {
         this.revealHiddenCard();
-        this.recieveCard( oneDeck.drawCard() )
-        this.winOrLose();
-        // while ( this.getScore() <= 17 ) {
-        //     setTimeout(() => {
-        //         this.recieveCard( oneDeck.drawCard() );
-        //         this.winOrLose();
-        //     }, 1000)
-        // }
+        while(this.totalScore <= 17){
+            this.recieveCard(oneDeck.drawCard())
+            this.tallyPoints();
+            this.winOrLose();
+            dealerScore();
+        }
+        this.tie();
+        this.compareScores();
     }
-    //   setTimeout(() => {
-    //     while (this.getScore() <= 17) {
-    //         this.recieveCard(oneDeck.drawCard());
-    //     }
-    //     this.winOrLose();
-    // }, 1000)
-    
-    
-    
-    //revealing multiple same cards for dealer - calling of cards the same class, reveal card class=hidden-card
     revealHiddenCard() {
-        // console.log(this.handArray)
         let hiddenCardImg = document.getElementsByClassName('hidden-card')[0]
-        // console.log(hiddenCardImg)
         hiddenCardImg.src = "./cards/" + this.handArray[0].stringifyCard() + ".png"
-        
-        hiddenCardImg.className = 'cards';
-    
-        
+        hiddenCardImg.className = 'cards';    
     }
 
     recieveHiddenCard(newCard) {
-
         let newCardImg = document.createElement("img");
-
         newCardImg.src = "./cards/BACK.png";
-
         newCardImg.className = 'hidden-card';
         document.getElementsByClassName("dealer-container")[0].appendChild(newCardImg);
         this.handArray.push(newCard);
     }
-
+    
 }  
 
+
+
+// VARIABLES
 
 let oneDeck = new Deck();
 let dealer = new Dealer('Dealer');
 let playerBob = new Player('Bob');
+let discardStack = [];
+
+let messageBox = document.getElementsByClassName('pop-up-messages')[0] ; messageBox.style.display = "none";
+let message = document.getElementsByClassName('messages')[0] ;
+
 
 // EVENTS
-document.getElementById('press-play').addEventListener('click', startGame); // PRESS PLAY BUTTON
+document.getElementById('press-play').addEventListener('click', startGame.bind(playerBob)); // PRESS PLAY BUTTON
+document.getElementById('hit-btn').addEventListener('click', clickedHit.bind(playerBob));
+document.getElementById('stay-btn').addEventListener('click', clickedStay.bind(dealer));
+document.getElementById('reset-btn').addEventListener('click',resetGame);
 
 
+// GAME FUNCTIONS
+
+function resetGame(){
+    console.log('rest')
+    document.getElementById("hit-btn").disabled = false;
+    playerBob.handArray = [];
+    dealer.handArray = [];
+    document.getElementsByClassName("player-container")[0].innerHTML = "";
+    document.getElementsByClassName("dealer-container")[0].innerHTML = "";
+    playerBob.playerScore = 0;
+    dealer.dealerScore = 0;
+    playerScore();
+    dealerScore();
+    document.getElementsByClassName('dealer-score')[0].innerHTML = '';
+    // dealerScore.style.display = "none";
+    messageBox.style.display = "none";
+    message.innerHTML = "";
+    startGame()
+}
+function discardPile(){
+    discardStack.push()
+}
+function playerScore(){
+    let playerScore = document.getElementsByClassName('player-score')[0];  
+    playerScore.innerHTML = 'PLAYER: ' + playerBob.tallyPoints();
+}
+function dealerScore(){
+    let dealerScore = document.getElementsByClassName('dealer-score')[0];  
+    dealerScore.innerHTML = 'DEALER: ' + dealer.tallyPoints();
+}
 function startGame() {
+    console.log(playerBob)
     document.getElementById('press-play').style.display = "none"; // HIDE PLAY BUTTON
     oneDeck.assembleDeck();
     oneDeck.shuffleDeck();
+    startRound();
 }
-function nextRound(){
+function startRound(){
     // PUT CARDS DOWN ON TABLE *
     playerBob.recieveCard(oneDeck.drawCard());
     playerBob.recieveCard(oneDeck.drawCard());
     dealer.recieveHiddenCard(oneDeck.drawCard());
     dealer.recieveCard(oneDeck.drawCard());
-
+    
     // CHECK CONDITIONS
-    playerBob.winOrLose();
+    playerScore();
+    playerBob.winOrLose();//
 
-    document.getElementById('hit-btn').addEventListener('click', clickedHit.bind(playerBob));
-    document.getElementById('stay-btn').addEventListener('click', clickedStay.bind(dealer));
 }
 function clickedStay() {
-    document.getElementById("hit-btn").disabled = true;  // DISABLE PLAY BUTTON
-    this.winOrLose(); // CHECK DEALAER CONDITIONS
-    this.dealerTurn(); // 
+    playerScore();
+    document.getElementsByClassName("hit-btn").disabled = true;  
+    dealerScore();
+    this.blackjack();
+    this.dealerTurn();
+    
 }
 function clickedHit() {
     let newCard = oneDeck.drawCard();
-    //assigns it to this player
     this.recieveCard(newCard);
+    playerScore();
     this.winOrLose();
 }
 
 
 
-// Enable pop-ups
-
-// let bust = document.getElementsByClassName('bust')
-// bust.style.display = "block"; 
-
-// let gameOver = document.getElementsByClassName('game-over')
-// gameOver.style.display = "block"; 
-
-// let dealerWins = document.getElementsByClassName('dealer-wins')
-// gameOver.style.display = "block"; 
-
-// let youWin = document.getElementsByClassName('You Win!')
-// gameOver.style.display = "block"; 
-
-// let youLose = document.getElementsByClassName('You Lose!')
-// gameOver.style.display = "block"; 
-
-
-// DISABLE MESSAGE POP UPS - first make divs
-// let gameOver = document.getElementsByClassName('game-over')
-// gameOver.style.display = "none"; 
-
-// let dealerWins = document.getElementsByClassName('dealer-wins')
-// gameOver.style.display = "none"; 
-
-// let youWin = document.getElementsByClassName('You Win!')
-// gameOver.style.display = "none"; 
-
-// let youLose = document.getElementsByClassName('You Lose!')
-// gameOver.style.display = "none"; 
-
-
-// reset () {
-//     reset scoreboard
-//hit and stay button
-// } 
-// AFTER RESET, GO TO NEXT ROUND
-// WHEN X AMOUNT OF CARDS REMAIN, ASK PLAYER IF THEY WANT TO DO ANOTHER GAME - DISPLAY
