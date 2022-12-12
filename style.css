@@ -1,11 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;1,100&family=Lexend:wght@200;400&display=swap');
+
 body {
     background-color: rgb(12, 85, 12);
     font-family: 'Aboreto', cursive;
     color: black;
-    height: 700px;
     background-image: url('https://images.unsplash.com/photo-1552749412-02bd58bcff5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100%;
+    text-align: center;
+    border-radius: 5px;
+    /* color: #333; */
+    height: 550px;
+    margin: 0 auto;
+    position: relative;
+    width: 1000px;
 
 }
 
@@ -39,10 +47,13 @@ body {
 .player-container {
     width: 100%;
     height: 100px;
+    border-color: red;
+
     /* background-color: red; */
     display: flex;
     grid-area: 5 / 1 / 5 / 6;
     justify-content: center;
+    /* font-family: 'Lexend', cursive; */
 
 }
 
@@ -64,18 +75,28 @@ body {
 }
 
 #press-play {
-    display: grid;
     grid-area: 2 / 3;
-    background-color: red;
-    width: 500px;
+    background: #222;
+    width: 170px;
     height: 100px;
-    font-size: 80px;
-    color: white;
+    font-size: 30px;
+    color: #fff;
+    padding: 15px;
+    position: relative;
+    text-align: center;
     border-radius: 50px;
-    display: inline-block;
-
-
+    letter-spacing: 5px;
+    cursor: pointer;
+    border: none;
+    font-family: 'Lexend', sans-serif;
 }
+
+#press-play:hover {
+    color: #fff;
+    background: #f4bcab;
+}
+
+
 
 #hit-btn {
     cursor: pointer;
@@ -87,6 +108,10 @@ body {
     border-radius: 50px;
     background-color: green;
     color: white;
+    border: none;
+    font-family: 'Lexend', sans-serif;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+    /* display: none  */
 }
 
 #stay-btn {
@@ -99,6 +124,9 @@ body {
     border-radius: 50px;
     background-color: green;
     color: white;
+    text-align: center;
+    border: none;
+    /* display: none  */
 
 }
 
@@ -110,15 +138,19 @@ body {
     width: 170px;
     height: 50px;
     font-size: 20px;
-    border-radius: 25px;
-    background-color: green;
+    border-radius: 10px;
+
+    background-color: transparent;
     opacity: .7;
     color: white;
-    display: block;
+    text-align: center;
+    border-color: gold;
+    /* display: block; */
 }
 
 
 .player-score {
+    
     font-family: Georgia, 'Times New Roman', Times, serif;
     display: grid;
     grid-area: 4/1;
@@ -138,20 +170,87 @@ body {
 }
 
 .pop-up-messages {
-    font-family: 'Courier New', Courier, monospace;
-    width: 450px;
-    height: 150px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    font-family: 'Lexend', sans-serif;
+
+    height: 20%;
     padding: 20px;
     border-radius: 60px;
-    background-color: rgb(54, 30, 193);
-    color: white;
+    background-color: rgb(3, 49, 16);
+    color: gold;
     font-size: 50px;
-    display: flex;
-    justify-content: center;
     flex-direction: column;
-    align-items: center;
-    grid-area: 2/3;
+    align-items: center; 
     cursor: pointer;
-
-
 }
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media () {} */
+
+
+@media only screen and (max-width: 1400px) {
+    body {
+        /* background-image: url('https://images.unsplash.com/photo-1552749412-02bd58bcff5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'); */
+        background-position: center center;
+        /* background-repeat: no-repeat; */
+        background-attachment: fixed;
+        background-size: cover;
+        /* background-size: 50%; */
+    
+        text-align: center;
+        border-radius: 5px;
+        /* color: #333; */
+        /* height: 550px;
+        margin: 0 auto;
+        position: relative;
+        width: 1000px;
+     */
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        background-image: url('./backgroundImage/600.png')   ;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+        text-align: center;
+        border-radius: 5px;
+        color: #333;
+        height: 400px;
+        width: 600px;
+}}
+
+@media only screen and (max-width: 768px) {
+    body {
+        background-image: url('./backgroundImage/768.png')   ;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+        text-align: center;
+        border-radius: 5px;
+        color: #333;
+        height: 512px;
+        width: 768px;
+}}
+
+@media only screen and (max-width: 968px) {
+    body {
+        background-image: url('./backgroundImage/968.png')   ;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+        text-align: center;
+        border-radius: 5px;
+        color: #333;
+        height: 645px;
+        width: 968px;
+}}
+
+
+
+

@@ -99,7 +99,7 @@ class Player {
     bust () {
         if ( this.totalScore > 21 ) {
             messageBox.style.display = 'flex'
-            message.innerHTML = this.player + " BUSTS";
+            message.innerHTML = this.player + " Bust";
             return true;
         }
         return false;
@@ -107,7 +107,7 @@ class Player {
     blackjack () {
         if ( this.totalScore === 21 ) {
             messageBox.style.display = 'flex'
-            message.innerHTML = "BLACKJACK!! " + this.player + " WINS!!!";
+            message.innerHTML = "BLACKJACK!! " + this.player + " Win!";
             return true;
         }
         return false;
@@ -116,7 +116,7 @@ class Player {
     tie ( player ) {
         if ( this.totalScore === player.totalScore ) {
             messageBox.style.display = 'flex'
-            message.innerHTML = "TIE";
+            message.innerHTML = "Push";
             return true;
         }
         return false;
@@ -124,10 +124,10 @@ class Player {
     compareScores ( player ) {
         if ( this.totalScore > player.totalScore ) {
             messageBox.style.display = 'flex'
-            message.innerHTML = this.player + " WINS";
+            message.innerHTML = this.player + " Wins";
         } else if ( this.totalScore < player.totalScore ) {
             messageBox.style.display = 'flex'
-            message.innerHTML = player + " WINS";
+            message.innerHTML = player + " Wins";
         }
     }
 
@@ -183,12 +183,13 @@ class Dealer extends Player {
 
 
 
-// VARIABLES
+//* @desc instances of Deck, Player, and Dealer class 
 let oneDeck = new Deck();
 let dealer = new Dealer( 'Dealer' );
-let playerBob = new Player( 'Bob' );
+let playerBob = new Player( 'You' );
 let discardStack = [];
 
+//*
 let messageBox = document.getElementsByClassName( 'pop-up-messages' )[0]; messageBox.style.display = "none";
 let message = document.getElementsByClassName( 'messages' )[0];
 
@@ -230,6 +231,11 @@ function dealerScore () {
     dealerScore.innerHTML = 'DEALER: ' + dealer.tallyPoints();
 }
 function startGame () {
+    // document.getElementsByClassName( "hit-btn" ).visable = false; //added
+    // document.getElementsByClassName( "stay-btn" ).visable = true; //added
+    // document.getElementsByClassName( "hit-btn" ).disabled = true; //added
+    // document.getElementsByClassName( "stay-btn" ).disabled = true; //added
+    
     document.getElementById( 'press-play' ).style.display = "none";
     oneDeck.assembleDeck();
     oneDeck.shuffleDeck();
