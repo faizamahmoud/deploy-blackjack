@@ -1,4 +1,4 @@
-BlackJackStacks!
+# BlackJackStacks
 
 This is your typical Black Jack game. Dealer vs Player(user). 
 
@@ -19,20 +19,24 @@ Dealer Wins:
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207211265-dd8968b9-cb32-45fd-9e97-3ff7b4cdb465.png">
 
 
+## Technologies 
+Javascript (Vanilla)
+HTML
+CSS
 
-## Technologies used: 
-    -Javascript
-    -HTML
-    -CSS
-
-
-Planned future enhancements (icebox items):
-    - add sound
-    - animations, give it some dimension
-    - add money/coins to the game
-    - functionality for adding more players which would require a lot of refactoring
+## Features and Goals
+- add some sound to buttons and game outcomes
+- animations, give it some dimension
+- add functionality for betting with coins
+- make it a  multi-player game
 
 
-Project Difficulties:
-Starting was the hardest part. I think apart of that was due to not having successfully used DOM retrieval or manipulation in VS Code. I was also jumping around alot which ended up hurting me. It's best to start at the begining and handle things in order, test, and make sure everything works as it should. 
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+
 
