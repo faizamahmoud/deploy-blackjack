@@ -3,7 +3,7 @@ BlackJackStacks!
 This is your typical Black Jack game. Dealer vs Player(user). 
 
 Start Game:
-![image](https://user-images.githubusercontent.com/56799470/184588826-d1c30de7-689a-4fdf-8dc3-fd11d94eb80f.png)
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207210882-dbc1ebfc-a4a3-43a6-8b32-355a096dda48.png">
 
 Player Bob is dealt two Cards, and dealer's score is hidden:
 ![image](https://user-images.githubusercontent.com/56799470/184588927-13d0405d-d8bf-4109-ab91-b2291dfb8e50.png)
