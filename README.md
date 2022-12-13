@@ -2,20 +2,16 @@
 
 This is your typical Black Jack game. Dealer vs Player(user). 
 
-Start Game:
+
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207210882-dbc1ebfc-a4a3-43a6-8b32-355a096dda48.png">
 
-Player Bob is dealt two Cards, and dealer's score is hidden:
+
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207211033-1d5f8a26-b760-4587-bbb2-457961b70ca5.png">
 
 
-Bob busts during the first hit, so the dealer's turn was skipped: 
-
-Player Wins
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207211191-6c4a2460-d6c6-4073-9f68-bf0112d640df.png">
 
 
-Dealer Wins:
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207211265-dd8968b9-cb32-45fd-9e97-3ff7b4cdb465.png">
 
 
