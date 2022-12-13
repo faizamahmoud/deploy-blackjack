@@ -6,20 +6,21 @@ Start Game:
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207210882-dbc1ebfc-a4a3-43a6-8b32-355a096dda48.png">
 
 Player Bob is dealt two Cards, and dealer's score is hidden:
-![image](https://user-images.githubusercontent.com/56799470/184588927-13d0405d-d8bf-4109-ab91-b2291dfb8e50.png)
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207211033-1d5f8a26-b760-4587-bbb2-457961b70ca5.png">
+
 
 Bob busts during the first hit, so the dealer's turn was skipped: 
-![image](https://user-images.githubusercontent.com/56799470/184589072-fb509fa7-e9c7-4b27-82cc-c1f6c1f89fca.png)
+
+Player Wins
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207211191-6c4a2460-d6c6-4073-9f68-bf0112d640df.png">
+
 
 Dealer Wins:
-![image](https://user-images.githubusercontent.com/56799470/184588726-53a8505a-2bc5-4f1a-a7ef-43f5bbdea134.png)
-
-Game reset:
-![image](https://user-images.githubusercontent.com/56799470/184589262-0c73175b-4ef1-4bc8-93eb-0f76df0b64a2.png)
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/56799470/207211265-dd8968b9-cb32-45fd-9e97-3ff7b4cdb465.png">
 
 
 
-Technologies used: 
+## Technologies used: 
     -Javascript
     -HTML
     -CSS
