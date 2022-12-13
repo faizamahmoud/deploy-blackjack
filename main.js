@@ -1,4 +1,6 @@
-
+/*****************************************************************/
+/*************************** Classes *****************************/
+/*****************************************************************/
 class Card {
     constructor ( suit, value ) {
         this.suit = suit;
@@ -121,13 +123,17 @@ class Player {
         }
         return false;
     }
+
+    
+        
+
     compareScores ( player ) {
         if ( this.totalScore > player.totalScore ) {
             messageBox.style.display = 'flex'
             message.innerHTML = this.player + " Wins";
         } else if ( this.totalScore < player.totalScore ) {
             messageBox.style.display = 'flex'
-            message.innerHTML = player + " Wins";
+            message.innerHTML = "You Wins";
         }
     }
 
@@ -137,6 +143,9 @@ class Player {
     }
 
 }
+
+
+
 
 class Dealer extends Player {
     constructor(player, handArray = []) {
@@ -156,14 +165,17 @@ class Dealer extends Player {
         this.revealHiddenCard();
         while(this.totalScore <= 17){
             this.recieveCard(oneDeck.drawCard());
-            this.tallyPoints();
-            this.winOrLose();
-            dealerScore();
+            this.tallyPoints(); 
+            this.winOrLose(); // T/F
+            dealerScore(); 
         }
         if(!this.blackjack() && !this.bust()){
-            this.tie(playerBob);
-            this.compareScores(playerBob);
+            this.tie(player); //IS IT A TIE
+            // this.playerWins(player); // DOES PLAYER HAVE MORE POINTS THAN DEALER
+            this.compareScores(player); // 
         }
+        // ! player wins when player has more than dealer but less than blackjack
+        // if(this.tallyPoints(player) > this.tallyPoints(player))
     }
     revealHiddenCard() {
         let hiddenCardImg = document.getElementsByClassName('hidden-card')[0];
@@ -186,22 +198,26 @@ class Dealer extends Player {
 //* @desc instances of Deck, Player, and Dealer class 
 let oneDeck = new Deck();
 let dealer = new Dealer( 'Dealer' );
-let playerBob = new Player( 'You' );
+let player = new Player( 'You' );
 let discardStack = [];
 
-//*
+
 let messageBox = document.getElementsByClassName( 'pop-up-messages' )[0]; messageBox.style.display = "none";
 let message = document.getElementsByClassName( 'messages' )[0];
 
 
-// EVENTS
-document.getElementById( 'press-play' ).addEventListener( 'click', startGame.bind( playerBob ) ); // PRESS PLAY BUTTON
-document.getElementById( 'hit-btn' ).addEventListener( 'click', clickedHit.bind( playerBob ) );
+/*****************************************************************/
+/*************************** Events *****************************/
+/*****************************************************************/
+document.getElementById( 'press-play' ).addEventListener( 'click', startGame.bind( player ) ); // PRESS PLAY BUTTON
+document.getElementById( 'hit-btn' ).addEventListener( 'click', clickedHit.bind( player ) );
 document.getElementById( 'stay-btn' ).addEventListener( 'click', clickedStay.bind( dealer ) );
 document.getElementById( 'reset-btn' ).addEventListener( 'click', resetGame );
 
 
-// GAME FUNCTIONS
+/*****************************************************************/
+/*************************** Game *****************************/
+/*****************************************************************/
 
 function resetGame () {
     document.getElementsByClassName( "player-container" )[0].innerHTML = "";
@@ -209,10 +225,10 @@ function resetGame () {
     document.getElementById( "hit-btn" ).disabled = false;
     document.getElementsByClassName( 'dealer-score' )[0].innerHTML = '';
 
-    playerBob.handArray = [];
+    player.handArray = [];
     dealer.handArray = [];
 
-    playerBob.playerScore = 0;
+    player.playerScore = 0;
     dealer.dealerScore = 0;
 
     playerScore();
@@ -224,33 +240,30 @@ function resetGame () {
 }
 function playerScore () {
     let playerScore = document.getElementsByClassName( 'player-score' )[0];
-    playerScore.innerHTML = 'PLAYER: ' + playerBob.tallyPoints();
+    playerScore.innerHTML = 'PLAYER: ' + player.tallyPoints();
 }
 function dealerScore () {
     let dealerScore = document.getElementsByClassName( 'dealer-score' )[0];
     dealerScore.innerHTML = 'DEALER: ' + dealer.tallyPoints();
 }
 function startGame () {
-    // document.getElementsByClassName( "hit-btn" ).visable = false; //added
-    // document.getElementsByClassName( "stay-btn" ).visable = true; //added
-    // document.getElementsByClassName( "hit-btn" ).disabled = true; //added
-    // document.getElementsByClassName( "stay-btn" ).disabled = true; //added
-    
     document.getElementById( 'press-play' ).style.display = "none";
+    document.getElementById( 'hit-btn' ).style.display = "block";
+    document.getElementById( 'stay-btn' ).style.display = "block";
     oneDeck.assembleDeck();
     oneDeck.shuffleDeck();
     startRound();
 }
 function startRound () {
     // PUT CARDS DOWN ON TABLE *
-    playerBob.recieveCard( oneDeck.drawCard() );
-    playerBob.recieveCard( oneDeck.drawCard() );
+    player.recieveCard( oneDeck.drawCard() );
+    player.recieveCard( oneDeck.drawCard() );
     dealer.recieveHiddenCard( oneDeck.drawCard() );
     dealer.recieveCard( oneDeck.drawCard() );
 
-    // CHECK CONDITIONS
+    // CHECK PLAYERS POINTS BEFORE DEALER REVEALS SECOND CARD
     playerScore();
-    playerBob.winOrLose();//
+    player.winOrLose();//
 
 }
 function clickedStay () {
