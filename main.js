@@ -128,10 +128,10 @@ class Player {
     compareScores ( player ) {
         if ( this.totalScore > player.totalScore ) {
             messageBox.style.display = 'flex'
-            message.innerHTML = this.player + " Wins";
+            message.innerHTML = this.player + " Wins!";
         } else if ( this.totalScore < player.totalScore ) {
             messageBox.style.display = 'flex'
-            message.innerHTML = "You Wins";
+            message.innerHTML = "You Win!";
         }
     }
 
