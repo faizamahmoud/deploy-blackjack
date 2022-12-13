@@ -125,8 +125,6 @@ class Player {
     }
 
     
-        
-
     compareScores ( player ) {
         if ( this.totalScore > player.totalScore ) {
             messageBox.style.display = 'flex'
@@ -174,8 +172,7 @@ class Dealer extends Player {
             // this.playerWins(player); // DOES PLAYER HAVE MORE POINTS THAN DEALER
             this.compareScores(player); // 
         }
-        // ! player wins when player has more than dealer but less than blackjack
-        // if(this.tallyPoints(player) > this.tallyPoints(player))
+        
     }
     revealHiddenCard() {
         let hiddenCardImg = document.getElementsByClassName('hidden-card')[0];
@@ -209,6 +206,7 @@ let message = document.getElementsByClassName( 'messages' )[0];
 /*****************************************************************/
 /*************************** Events *****************************/
 /*****************************************************************/
+
 document.getElementById( 'press-play' ).addEventListener( 'click', startGame.bind( player ) ); // PRESS PLAY BUTTON
 document.getElementById( 'hit-btn' ).addEventListener( 'click', clickedHit.bind( player ) );
 document.getElementById( 'stay-btn' ).addEventListener( 'click', clickedStay.bind( dealer ) );
